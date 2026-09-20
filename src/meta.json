@@ -1,0 +1,6 @@
+{
+  "source": "contacto-console",
+  "ref": "origin/codex/ui-revamp-dev-review",
+  "extractedAt": "2026-09-20",
+  "radius": "var(--radius)"
+}
