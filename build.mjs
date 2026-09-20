@@ -63,9 +63,25 @@ const rule = (name, t) =>
     .filter(Boolean)
     .join('\n')
 
+/* The class form only helps consumers that control the markup. A library
+   styling its own elements needs custom properties, so emit both: a `font`
+   shorthand per token (weight size/line family) plus tracking, which the
+   shorthand cannot carry. */
+const fontVar = (name, t) =>
+  `  --text-${name}: ${t.style ? `${t.style} ` : ''}${t.weight} ${t.size}/${t.line} ${
+    t.family ? stack(t.family) : 'var(--font-sans, system-ui, sans-serif)'
+  };${t.tracking ? `\n  --text-${name}-tracking: ${t.tracking};` : ''}`
+
 writeFileSync(
   new URL('dist/type.css', import.meta.url),
-  `${cssBanner}\n\n${Object.entries(type).map(([n, t]) => rule(n, t)).join('\n\n')}\n`
+  `${cssBanner}
+
+:root {
+${Object.entries(type).map(([n, t]) => fontVar(n, t)).join('\n')}
+}
+
+${Object.entries(type).map(([n, t]) => rule(n, t)).join('\n\n')}
+`
 )
 
 copyFileSync(new URL('src/colors.css', import.meta.url), new URL('dist/colors.css', import.meta.url))
