@@ -75,10 +75,13 @@ const varsIn = (scss, open) => {
     if (scss[i] === '{') depth++
     else if (scss[i] === '}' && --depth === 0) break
   }
-  return [...scss.slice(from, i).matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [
-    m[1],
-    m[2].trim(),
-  ])
+  // Strip comments first: an scss `//` line mentioning a token name would
+  // otherwise be scraped as a declaration, with the prose as its value.
+  const body = scss
+    .slice(from, i)
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/(^|\s)\/\/[^\n]*/g, '$1')
+  return [...body.matchAll(/(--[\w-]+)\s*:\s*([^;{}]+);/g)].map((m) => [m[1], m[2].trim()])
 }
 
 // Tailwind's semantic colour mapping (name -> hsl(var(--token))). `flow` is the
