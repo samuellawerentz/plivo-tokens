@@ -1,0 +1,139 @@
+{
+  "h1-500": {
+    "size": "26px",
+    "line": "32px",
+    "weight": 500,
+    "tracking": "-0.01em"
+  },
+  "h1-400": {
+    "size": "26px",
+    "line": "32px",
+    "weight": 400,
+    "tracking": "-0.01em"
+  },
+  "h2-500": {
+    "size": "22px",
+    "line": "32px",
+    "weight": 500,
+    "tracking": "-0.01em"
+  },
+  "h2-400": {
+    "size": "22px",
+    "line": "32px",
+    "weight": 400,
+    "tracking": "-0.01em"
+  },
+  "h3-500": {
+    "size": "18px",
+    "line": "26px",
+    "weight": 500,
+    "tracking": "-0.01em"
+  },
+  "h3-600": {
+    "size": "18px",
+    "line": "26px",
+    "weight": 600
+  },
+  "h3-400": {
+    "size": "18px",
+    "line": "26px",
+    "weight": 400
+  },
+  "h4-500": {
+    "size": "16px",
+    "line": "24px",
+    "weight": 500,
+    "tracking": "-0.01em"
+  },
+  "h4-600": {
+    "size": "16px",
+    "line": "26px",
+    "weight": 600
+  },
+  "h4-400": {
+    "size": "16px",
+    "line": "26px",
+    "weight": 400
+  },
+  "p-600": {
+    "size": "14px",
+    "line": "22px",
+    "weight": 600
+  },
+  "p-500": {
+    "size": "14px",
+    "line": "22px",
+    "weight": 500
+  },
+  "p-400": {
+    "size": "14px",
+    "line": "22px",
+    "weight": 400
+  },
+  "pi-400": {
+    "size": "14px",
+    "line": "22px",
+    "weight": 400,
+    "style": "italic"
+  },
+  "s-600": {
+    "size": "13px",
+    "line": "20px",
+    "weight": 600
+  },
+  "s-500": {
+    "size": "13px",
+    "line": "20px",
+    "weight": 500
+  },
+  "s-400": {
+    "size": "13px",
+    "line": "20px",
+    "weight": 400
+  },
+  "xs-600": {
+    "size": "12px",
+    "line": "17px",
+    "weight": 600
+  },
+  "xs-500": {
+    "size": "12px",
+    "line": "17px",
+    "weight": 500
+  },
+  "xs-400": {
+    "size": "12px",
+    "line": "17px",
+    "weight": 400
+  },
+  "xsi-400": {
+    "size": "12px",
+    "line": "17px",
+    "weight": 400,
+    "style": "italic"
+  },
+  "xxs-400": {
+    "size": "10px",
+    "line": "13px",
+    "weight": 400
+  },
+  "xxs-600": {
+    "size": "10px",
+    "line": "13px",
+    "weight": 600
+  },
+  "label": {
+    "size": "11px",
+    "line": "14px",
+    "weight": 500,
+    "tracking": "0.14em",
+    "family": "jetbrains",
+    "transform": "uppercase"
+  },
+  "xl-500": {
+    "size": "32px",
+    "line": "1.04",
+    "weight": 500,
+    "tracking": "-0.035em"
+  }
+}

@@ -17,7 +17,8 @@
     "extract": "node scripts/extract.mjs",
     "build": "node build.mjs",
     "test": "node --test",
-    "scrub": "bash scripts/scrub.sh"
+    "scrub": "bash scripts/scrub.sh",
+    "check-dist": "bash scripts/check-dist.sh"
   },
   "repository": {
     "type": "git",
