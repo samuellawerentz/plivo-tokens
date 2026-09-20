@@ -56,7 +56,7 @@ const rule = (name, t) =>
     `  font-weight: ${t.weight};`,
     t.tracking && `  letter-spacing: ${t.tracking};`,
     t.style && `  font-style: ${t.style};`,
-    t.family && `  font-family: ${stack(t.family)};`,
+    `  font-family: ${familyVar(name, t)};`,
     t.transform && `  text-transform: ${t.transform};`,
     '}',
   ]
@@ -67,16 +67,34 @@ const rule = (name, t) =>
    styling its own elements needs custom properties, so emit both: a `font`
    shorthand per token (weight size/line family) plus tracking, which the
    shorthand cannot carry. */
+// Family is chosen by role, not repeated per token: Sora for display sizes,
+// JetBrains Mono for the label/eyebrow, Inter for everything else. Each goes
+// through its own var so a host can swap a face without touching the ramp.
+const familyVar = (name, t) => {
+  if (t.family === 'jetbrains') return 'var(--font-mono, ui-monospace, monospace)'
+  if (/^(h[1-4]|xl)-/.test(name)) return 'var(--font-display, var(--font-sans, system-ui, sans-serif))'
+  return 'var(--font-sans, system-ui, sans-serif)'
+}
+
 const fontVar = (name, t) =>
-  `  --text-${name}: ${t.style ? `${t.style} ` : ''}${t.weight} ${t.size}/${t.line} ${
-    t.family ? stack(t.family) : 'var(--font-sans, system-ui, sans-serif)'
-  };${t.tracking ? `\n  --text-${name}-tracking: ${t.tracking};` : ''}`
+  `  --text-${name}: ${t.style ? `${t.style} ` : ''}${t.weight} ${t.size}/${t.line} ${familyVar(
+    name,
+    t
+  )};${t.tracking ? `\n  --text-${name}-tracking: ${t.tracking};` : ''}`
+
+const familyVars = [
+  `  --font-sans: ${stack('inter')};`,
+  `  --font-display: ${stack('sora')};`,
+  `  --font-mono: ${stack('jetbrains')};`,
+].join('\n')
 
 writeFileSync(
   new URL('dist/type.css', import.meta.url),
   `${cssBanner}
 
 :root {
+${familyVars}
+
 ${Object.entries(type).map(([n, t]) => fontVar(n, t)).join('\n')}
 }
 

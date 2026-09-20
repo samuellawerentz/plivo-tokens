@@ -17,7 +17,7 @@ test('every token reaches both outputs under the same name', () => {
 test('the CSS build carries what a Tailwind fontSize tuple cannot', () => {
   // `label` is the reason type.json exists rather than a raw Tailwind config.
   const label = css.slice(css.indexOf('.text-label {'))
-  assert.match(label, /font-family: 'JetBrains Mono'/)
+  assert.match(label, /font-family: var\(--font-mono/)
   assert.match(label, /text-transform: uppercase/)
   assert.equal(preset.theme.extend.fontSize.label[1].fontFamily, undefined)
 })
@@ -25,4 +25,15 @@ test('the CSS build carries what a Tailwind fontSize tuple cannot', () => {
 test('radius collapses to a single token', () => {
   const radii = Object.entries(preset.theme.extend.borderRadius).filter(([k]) => k !== 'none' && k !== 'full')
   assert.ok(radii.every(([, v]) => v === 'var(--radius)'), 'every named radius should be var(--radius)')
+})
+
+test('families resolve by role, and the three stacks ship', () => {
+  const root = css.slice(css.indexOf(':root {'), css.indexOf('}'))
+  assert.match(root, /--font-sans: Inter/)
+  assert.match(root, /--font-display: Sora/)
+  assert.match(root, /--font-mono: 'JetBrains Mono'/)
+  // Display sizes take Sora, body sizes take Inter.
+  assert.match(root, /--text-h1-500:[^;]*--font-display/)
+  assert.match(root, /--text-p-400:[^;]*--font-sans/)
+  assert.match(root, /--text-label:[^;]*--font-mono/)
 })
