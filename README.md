@@ -5,8 +5,8 @@ shapes consumers actually need. No React, no components, no framework.
 
 | Consumer | Use |
 |---|---|
-| Tailwind projects (`contacto-console`, `plivodotcom`) | the preset |
-| Non-Tailwind projects (`ryuk2-vue`, plain pages, emails) | `type.css` + `colors.css` |
+| Tailwind projects | the preset |
+| Non-Tailwind projects (Vue, Astro, plain pages, email) | `type.css` + `colors.css` |
 | Figma plugins, generators, docs | `type.json` |
 
 Same class names in every shape, so markup copied between projects keeps working.
@@ -66,16 +66,19 @@ everywhere. Only `rounded-full` stays round.
 
 ## Provenance
 
-v1 is extracted, not authored. Source of truth is still `contacto-console`, on
-`codex/ui-revamp-dev-review` (the theme upgrade adopting plivo.com's kit).
+v1 is extracted, not authored: the source of truth is still Plivo's internal
+console, which is mid-way through adopting the plivo.com theme kit.
 
 ```sh
-node scripts/extract.mjs ~/path/to/contacto-console origin/codex/ui-revamp-dev-review
+node scripts/extract.mjs <console-repo> <git-ref>   # Plivo engineers only
 node build.mjs
 node --test
 ```
 
-`extract.mjs` `require()`s the upstream `tailwind.base.js` and reads its theme
+The repo path and ref are arguments and are never committed — generated files
+record only the extraction date.
+
+`extract.mjs` `require()`s the upstream Tailwind config and reads its theme
 object rather than parsing it, so it survives edits upstream. Re-run it when the
 branch moves and diff `src/`.
 
@@ -85,10 +88,10 @@ until then, do not hand-edit `src/`.
 ## Known gaps for v1
 
 - `src/colors.css` is a faithful copy: 210 light vars and 104 dark. Some are
-  product-specific (`--whatsapp-bg`, `--ai-bg`). Pruning needs the design owner,
-  not a guess.
-- Only `flow.*` is excluded from the Tailwind colour mapping (the CX flow
-  builder's own palette). `sidebar.*`, `bubble.*`, `call.*` still ship.
+  product-specific rather than brand (channel and agent colours). Pruning needs
+  the design owner, not a guess.
+- One product-only colour group is excluded from the Tailwind mapping;
+  `sidebar.*`, `bubble.*`, `call.*` still ship.
 - Upstream still has three HSL spellings (`0deg 0% 100%`, `240 5.9% 90%`,
   `189, 85%, 92%, 1`). The comma form carries a baked-in alpha, so Tailwind's
   `bg-x/50` opacity syntax breaks on those. Normalising is the next change.
@@ -97,3 +100,7 @@ until then, do not hand-edit `src/`.
   ```sh
   bunx tailwindcss -c tailwind.config.cjs -i in.css -o out.css
   ```
+
+## License
+
+MIT
